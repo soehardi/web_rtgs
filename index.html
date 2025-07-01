@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Interactive Maps with Info Panel</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            padding: 15px;
+            text-align: center;
+            background-color: #4285F4;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .map-container {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 60%;
+        }
+        .info-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .location-info {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .location-info h3 {
+            margin-top: 0;
+            color: #4285F4;
+        }
+        .location-info p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PMO AI RTGS</h1>
+    </div>
+    
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/d/embed?mid=1KuQIQQg1U4nejmDge-z7mTu9bWsqdQw&ehbc=2E312F&ll=-2.0847817224818725%2C117.32305818500001&z=5" 
+            style="border:0; width:100%; height:100%;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+    
+    <div class="info-panel" id="infoPanel">
+        <h2>Informasi Lokasi</h2>
+        <div id="locationDetails">
+            <p>Klik pada suatu lokasi di peta untuk melihat detail</p>
+        </div>
+        
+        <!-- Contoh informasi lokasi yang akan diisi secara dinamis -->
+        <div class="location-info" style="display: none;" id="templateLocation">
+            <h3 id="locationName">Nama Lokasi</h3>
+            <p><strong>Alamat:</strong> <span id="locationAddress">-</span></p>
+            <p><strong>Koordinat:</strong> <span id="locationCoords">-</span></p>
+            <p><strong>Deskripsi:</strong> <span id="locationDescription">-</span></p>
+            <p><strong>Fasilitas:</strong> <span id="locationFacilities">-</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Contoh data lokasi (biasanya ini akan didapat dari database atau API)
+        const locations = {
+            'point1': {
+                name: 'Monumen Nasional',
+                address: 'Gambir, Jakarta Pusat',
+                coords: '-6.1754, 106.8272',
+                description: 'Monumen peringatan kemerdekaan Indonesia',
+                facilities: 'Museum, Lift ke puncak, Taman'
+            },
+            'point2': {
+                name: 'Candi Borobudur',
+                address: 'Magelang, Jawa Tengah',
+                coords: '-7.6079, 110.2038',
+                description: 'Candi Buddha terbesar di dunia',
+                facilities: 'Area parkir, Guide, Toilet'
+            }
+        };
+
+        // Fungsi untuk menampilkan informasi lokasi
+        function showLocationInfo(locationId) {
+            const location = locations[locationId];
+            if (!location) return;
+            
+            const infoPanel = document.getElementById('locationDetails');
+            infoPanel.innerHTML = `
+                <div class="location-info">
+                    <h3>${location.name}</h3>
+                    <p><strong>Alamat:</strong> ${location.address}</p>
+                    <p><strong>Koordinat:</strong> ${location.coords}</p>
+                    <p><strong>Deskripsi:</strong> ${location.description}</p>
+                    <p><strong>Fasilitas:</strong> ${location.facilities}</p>
+                </div>
+            `;
+        }
+
+        // Simulasi klik pada peta (dalam implementasi nyata, ini akan dipicu dari peta)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contoh: Tampilkan info lokasi pertama setelah 2 detik
+            setTimeout(() => showLocationInfo('point1'), 2000);
+            
+            // Untuk implementasi nyata, Anda perlu menggunakan Google Maps API
+            // dan menambahkan event listener untuk klik pada marker
+        });
+    </script>
+</body>
+</html>
